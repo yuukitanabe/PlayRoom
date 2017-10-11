@@ -24,22 +24,25 @@ public class BoatController : MonoBehaviour {
     void Update()
     {
         timeElapsed += Time.deltaTime;
-        StartCoroutine("Direction");
+        
     }
     IEnumerator Direction()
     {
-        Vector3 diff = transform.position - prev;
         yield return new WaitForSeconds(0.1f);
+        Vector3 diff = transform.position - prev;       
         transform.rotation = Quaternion.LookRotation(diff);
+        Debug.Log("X座標は" + diff.x);
+        Debug.Log("Y座標は" + diff.y);
+        Debug.Log("Z座標は" + diff.z);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Wall")
         {
-           
+            Debug.Log("StartCoroutine始めるよ");
             prev = transform.position;
-            
+            StartCoroutine("Direction");
         }
     }
 }
